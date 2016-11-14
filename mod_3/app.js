@@ -3,7 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var passport = require('passport');
-var session = require('session');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(session({
-  secret: 'supersecret: 1234password';
+  secret: 'H}gG0(Ptr0gRtc#1P.X9;)bZ0hs9HsY',
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
