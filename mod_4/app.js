@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/chirm-test');
 
 var app = express();
 
@@ -30,6 +32,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Initialize models (mongoose)
+require('./models/models.js');
 
 // Initialize passport
 var initPassport = require('./passport-init.js');
