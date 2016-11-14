@@ -1,6 +1,20 @@
 var express = require("express");
 var router = express.Router();
 
+router.use(function(req, res, next){
+  if(req.method === "GET"){
+    // continue to the next middleware or request handler
+    return next();
+  }
+
+  if(!req.isAuthenticated()){
+    // user not authenticated, redircat to login page
+    res.redirect('#login');
+  }
+
+  // user authenticated
+  return next();
+});
 router.route('/posts')
   .get(function(req, res){
 
@@ -29,6 +43,5 @@ router.route('/posts/:id')
   .delete(function(req, res){
     res.send({message: 'TODO delete post with ID ' + req.params.id})
   })
-
 
 module.exports = router;

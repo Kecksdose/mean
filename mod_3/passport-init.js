@@ -7,21 +7,28 @@ module.exports = function(passport){
     // Passport needs to be able to serialize and deserialize users to support persistent login sessions
     passport.serializeUser(function(user, done) {
         console.log('serializing user:',user.username);
-        return done(null, user.username);
+        //return the unique id for the user
+        done(null, user.username);
     });
 
     passport.deserializeUser(function(username, done) {
-
-        return done('we have not implemented this', false);
-
+    return done(null, users[username]);
     });
 
     passport.use('login', new LocalStrategy({
             passReqToCallback : true
         },
-        function(req, username, password, done) { 
+        function(req, username, password, done) {
+            if (!users[username]){
+                return done('user not found', false);
+            }
 
-            return done('we have not implemented this', false);
+            if (!isValidPassword(users[username], password)){
+                return done('invalid password', users[username]);
+            }
+
+            console.log('sucessfully signed in');
+            return done(null, users[username]);
         }
     ));
 
@@ -29,9 +36,19 @@ module.exports = function(passport){
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
-
-            return done('we have not implemented this', false);
-
+            console.log('SIGNUP REQUEST.')
+            console.log('username: ', username)
+            console.log('password: ', password)
+            //check if the user already exists
+            if (users[username]){
+                return done('username already taken', false);
+            }
+            // add user to db
+            users[username] = {
+                username: username,
+                password: createHash(password),
+            }
+            return done(null, users[username]);
         })
     );
 
