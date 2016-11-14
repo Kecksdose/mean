@@ -21,6 +21,8 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(session({
   secret: 'H}gG0(Ptr0gRtc#1P.X9;)bZ0hs9HsY',
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
