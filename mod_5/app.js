@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 // Initialize models (mongoose)
 require('./models/models.js');
 
+var index = require('./routes/index.js');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
 var mongoose = require('mongoose');
@@ -40,6 +41,7 @@ app.use(passport.session());
 var initPassport = require('./passport-init.js');
 initPassport(passport);
 
+app.use('/', index);
 app.use('/api', api);
 app.use('/auth', authenticate);
 

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>My Angular App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script src="javascripts/app.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
+  </head>
+  <body ng-app="myApp">
+    <nav class="navbar-fluid navbar-default navbar-fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#/"> Chirp! </a>
+            <p class="navbar-right navbar-text">
+                <a href="#/login">Login</a> or <a href="#/register">Register</a>
+            </p>
+        </div>
+    </nav>
+    <div class="col-md-offset-2 col-md-8">
+        <div ng-view></div>
+    </div>
+  </body>
+</html>
