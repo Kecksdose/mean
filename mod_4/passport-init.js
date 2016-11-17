@@ -15,19 +15,12 @@ module.exports = function(passport){
         return done(null, user._id);
     });
 
-    passport.deserializeUser(function(id, done) {
-        console.log('deserializing user id: ', id);
-        User.findById(id, function(err, user){
-            if(err){
-                return done(err, false);
-            }
 
-            if(!user){
-                return done('user not found', false);
-            }
-            return done(null, user);
-        })
-        return done(user, true);
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            console.log('deserializing user:',user.username);
+            done(err, user);
+        });
     });
 
     passport.use('login', new LocalStrategy({
