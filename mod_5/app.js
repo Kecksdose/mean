@@ -14,7 +14,8 @@ var index = require('./routes/index.js');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/chirm-test');
+// mongoose.connect('mongodb://localhost:27017/chirm-test');
+mongoose.connect('mongodb://tschmelzer:mongostarter@ds031845.mlab.com:31845/purzelindb');
 
 var app = express();
 

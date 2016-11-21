@@ -1,8 +1,31 @@
-var app = angular.module("myApp", ['ngRoute', 'ngResource']).run(function($rootScope, $http){
-  $rootScope.authenticated = false;
-  $rootScope.current_user = "";
+var app = angular.module("myApp", ['ngRoute', 'ngResource', 'ngCookies']).run(
+    function($rootScope, $http, $cookies, $location){
 
+  $rootScope.$on('$locationChangeStart', function (event, next, current) {
+  // var for user stored in session cookie
+  var user = '';
+  if(typeof $cookies.get('user') == 'string') {
+    user = JSON.parse($cookies.get('user'));
+  }
+
+  console.log("tried to grab cookie");
+  // no logged in user, we should be going to #login
+  if (user == '') {
+    console.log("not auth'd");
+    $rootScope.authenticated = false;
+    $rootScope.current_user = '';
+  }
+  // logged in session exists, set current user as authenticated
+  else {
+    console.log("yes, auth'd");
+    $rootScope.authenticated = true;
+    $rootScope.current_user = user;
+    // $location.path('/');
+  }
+  }
+)
   $rootScope.logout = function(){
+    $cookies.remove('user');
     $http.get('/auth/signout');
 
     $rootScope.authenticated = false;
@@ -39,7 +62,7 @@ app.controller('mainController', function(postService, $scope, $rootScope){
   $scope.newPost = {created_by: '', text: '', created_at: ''};
 
   $scope.post = function() {
-    $scope.newPost.created_by = $rootScope.current_user;
+    $scope.newPost.created_by = $rootScope.current_user.username;
     $scope.newPost.created_at = Date.now();
     postService.save($scope.newPost, function(){
       $scope.posts = postService.query();
@@ -48,13 +71,14 @@ app.controller('mainController', function(postService, $scope, $rootScope){
   };
 });
 
-app.controller("authController", function($scope, $rootScope, $http, $location){
+app.controller("authController", function($scope, $rootScope, $http, $location, $cookies){
   $scope.user = {username: "", password: ""};
   $scope.error_message = "";
 
   $scope.login = function(){
     $http.post('/auth/login', $scope.user).success(function(data){
       if(data.state == 'success'){
+        $cookies.put('user', JSON.stringify(data.user))
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user.username;
         $location.path('/');

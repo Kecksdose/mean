@@ -5,6 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.min.js"></script>
     <script src="javascripts/app.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,7 +19,7 @@
                 <a href="#/login">Login</a> or <a href="#/register">Register</a>
             </p>
             <p class="navbar-right navbar-text" ng-show="authenticated"><a href="#/" ng-click="logout()">Logout</a></p>
-            <p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
+            <p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user.username}}</p>
         </div>
     </nav>
     <div class="col-md-offset-2 col-md-8">
